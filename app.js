@@ -1,12 +1,19 @@
 var express = require("express");
+let ejs = require("ejs");
 var service = require("./request.js");
 
 var app = express();
+app.set("view engine", "ejs");
 const port = 3000;
 
 app.get("/getMap", async (req, res) => {
   console.log(req.query);
-  res.send( await service.getMap(req.query.location) );
+  const { coords } = await service.getMap(req.query.location);
+  res.render("index", {
+    name: `${req.query.name}`,
+    lat: coords.lat,
+    lon: coords.long,
+  });
 });
 
 app.listen(port, () => {
