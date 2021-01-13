@@ -1,5 +1,4 @@
 var express = require("express");
-let ejs = require("ejs");
 var service = require("./request.js");
 
 var app = express();

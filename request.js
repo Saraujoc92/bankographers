@@ -21,14 +21,19 @@ const getURL = (lat, lon) => {
   return `http://ec2-18-198-187-98.eu-central-1.compute.amazonaws.com:3650/api/maps/streets#${17}/${lat}/${lon}`;
 };
 
+const cache = {};
 module.exports = {
   getMap: async (query) => {
+    if (cache[query]) {
+      return cache[query];
+    }
     const result = await geocode(query);
     console.log(JSON.stringify(result, null, 2));
     const [long, lat] = result.geometry.coordinates;
-    return {
+    cache[query] = {
       url: getURL(lat, long),
       coords: { lat, long },
     };
+    return cache[query];
   },
 };
