@@ -6,7 +6,7 @@ const port = 3000;
 
 app.get("/getMap", async (req, res) => {
   console.log(req.query);
-  res.send({ res: await service.getMap(req.query.location) });
+  res.send( await service.getMap(req.query.location) );
 });
 
 app.listen(port, () => {

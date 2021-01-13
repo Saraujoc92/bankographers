@@ -24,8 +24,11 @@ const getURL = (lat, lon) => {
 module.exports = {
   getMap: async (query) => {
     const result = await geocode(query);
-    const [lat, long] = result.geometry.coordinates.reverse();
     console.log(JSON.stringify(result, null, 2));
-    return getURL(lat, long);
+    const [long, lat] = result.geometry.coordinates;
+    return {
+      url: getURL(lat, long),
+      coords: { lat, long },
+    };
   },
 };
